@@ -55,6 +55,7 @@ public final class CameraManager {
   private AutoFocusManager autoFocusManager;
   private Rect framingRect;
   private Rect framingRectInPreview;
+  private Point fragmentSize;
   private boolean initialized;
   private boolean previewing;
   private int requestedCameraId = -1;
@@ -80,8 +81,9 @@ public final class CameraManager {
    * @param holder The surface object which the camera will draw preview frames into.
    * @throws IOException Indicates the camera driver failed to open.
    */
-  public synchronized void openDriver(SurfaceHolder holder) throws IOException {
+  public synchronized void openDriver(SurfaceHolder holder, Point fragmentSize) throws IOException {
     Camera theCamera = camera;
+    this.fragmentSize = fragmentSize;
     if (theCamera == null) {
 
       if (requestedCameraId >= 0) {
@@ -218,7 +220,7 @@ public final class CameraManager {
       if (camera == null) {
         return null;
       }
-      Point screenResolution = configManager.getScreenResolution();
+      Point screenResolution = fragmentSize;
       if (screenResolution == null) {
         // Called early, before init even finished
         return null;
@@ -260,7 +262,7 @@ public final class CameraManager {
       }
       Rect rect = new Rect(framingRect);
       Point cameraResolution = configManager.getCameraResolution();
-      Point screenResolution = configManager.getScreenResolution();
+      Point screenResolution = fragmentSize;
       if (cameraResolution == null || screenResolution == null) {
         // Called early, before init even finished
         return null;
@@ -303,7 +305,7 @@ public final class CameraManager {
    */
   public synchronized void setManualFramingRect(int width, int height) {
     if (initialized) {
-      Point screenResolution = configManager.getScreenResolution();
+      Point screenResolution = fragmentSize;
       if (width > screenResolution.x) {
         width = screenResolution.x;
       }

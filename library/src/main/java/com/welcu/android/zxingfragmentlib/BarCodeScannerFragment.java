@@ -6,6 +6,8 @@ import android.content.pm.ActivityInfo;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Paint;
+import android.graphics.Point;
+import android.graphics.Rect;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
@@ -374,7 +376,8 @@ public class BarCodeScannerFragment extends Fragment implements SurfaceHolder.Ca
       return;
     }
     try {
-      cameraManager.openDriver(surfaceHolder);
+      Rect surfaceFrame = surfaceHolder.getSurfaceFrame();
+      cameraManager.openDriver(surfaceHolder, new Point(surfaceFrame.width(), surfaceFrame.height()));
       // Creating the handler starts the preview, which can also throw a RuntimeException.
       if (handler == null) {
         handler = new BarCodeScannerHandler(this, decodeFormats, decodeHints, characterSet, cameraManager);

@@ -41,7 +41,6 @@ final class CameraConfigurationManager {
   private static final String TAG = "CameraConfiguration";
 
   private final Context context;
-  private Point screenResolution;
   private Point cameraResolution;
 
   CameraConfigurationManager(Context context) {
@@ -82,9 +81,8 @@ final class CameraConfigurationManager {
       camera.setParameters(parameters);
     }
 
-    screenResolution = theScreenResolution;
-    Log.i(TAG, "Screen resolution: " + screenResolution);
-    cameraResolution = CameraConfigurationUtils.findBestPreviewSizeValue(parameters, screenResolution);
+    Log.i(TAG, "Screen resolution: " + theScreenResolution);
+    cameraResolution = CameraConfigurationUtils.findBestPreviewSizeValue(parameters, theScreenResolution);
     Log.i(TAG, "Camera resolution: " + cameraResolution);
   }
 
@@ -147,10 +145,6 @@ final class CameraConfigurationManager {
 
   Point getCameraResolution() {
     return cameraResolution;
-  }
-
-  Point getScreenResolution() {
-    return screenResolution;
   }
 
   boolean getTorchState(Camera camera) {
