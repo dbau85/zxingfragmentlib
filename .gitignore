@@ -5,3 +5,9 @@
 .DS_Store
 /build
 /zxing-android/build
+.idea
+library/library.iml
+sample/sample.iml
+zxing-android/zxing-android.iml
+zxingfragmentlib.iml
+library/zxingfragmentlib.iml
